@@ -1,5 +1,6 @@
 import pygame,sys #importo librerías
-from constantes import * #importo constantes
+from constantes import *
+from piso import Piso #importo constantes
 
 pygame.init() #inicializo pygame
 
@@ -7,6 +8,8 @@ ventana=pygame.display.set_mode((ancho_ventana,alto_ventana)) #creo ventana
 pygame.display.set_caption("Juego proyecto final") #título de la ventana
 
 reloj=pygame.time.Clock() #creo reloj
+
+piso=Piso() #creo piso
 
 while True:
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
@@ -17,5 +20,7 @@ while True:
             sys.exit() #se cierra programa
 
     ventana.fill(color_fondo) #Color de fondo
+
+    piso.dibujar(ventana) #dibujo piso
 
     pygame.display.update() #actualizo pantalla
