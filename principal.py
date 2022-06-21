@@ -4,6 +4,7 @@ from piso import Piso #importo clase piso
 from techo import Techo #importo clase techo
 from banner import Banner #importo clase banner
 from jugador import Jugador #importo clase jugador
+from pelota import Pelota #importo clase pelota
 
 pygame.init() #inicializo pygame
 
@@ -19,6 +20,9 @@ techo=Techo() #creo techo
 banner=Banner() #creo banner
 
 jugador_1=Jugador() #creo jugador
+jugador_2=Jugador() #creo jugador
+
+pelota=Pelota() #creo pelota
 
 while True:
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
@@ -49,5 +53,7 @@ while True:
     banner.dibujar(ventana) #dibujo banner
 
     jugador_1.dibujar(ventana) #dibujo jugador
+
+    pelota.dibujar(ventana) #dibujo pelota
 
     pygame.display.update() #actualizo pantalla
