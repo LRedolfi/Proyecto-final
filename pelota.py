@@ -15,8 +15,20 @@ class Pelota(pygame.sprite.Sprite): #defino la clase pelota
         self.velocidad_y=velocidad_pelota #velocidad en y
         self.subiendo=False #pelota subiendo
         self.bajando=False #pelota bajando
-        self.izquierda=False #pelota izquierda
-        self.derecha=False #pelota derecha
+        self.moviendo_izquierda=False #pelota izquierda
+        self.moviendo_derecha=False #pelota derecha
     
     def dibujar(self,superficie): #dibujo la pelota
         superficie.blit(self.image,self.rect) #dibujo la superficie
+
+    def derecha(self,velocidad):
+        self.rect.x+=velocidad #muevo la pelota a la derecha
+    
+    def izquierda(self,velocidad):
+        self.rect.x-=velocidad #muevo la pelota a la izquierda
+
+    def subir(self,velocidad):
+        self.rect.y-=velocidad #muevo la pelota hacia arriba
+
+    def bajar(self,velocidad): 
+        self.rect.y+=velocidad #muevo la pelota hacia abajo

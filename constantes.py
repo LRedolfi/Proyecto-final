@@ -16,4 +16,4 @@ color_jugador = (255, 0, 0)
 color_pelota = (0, 0, 255)
 
 velocidad_jugador = 5
-velocidad_pelota = 5
+velocidad_pelota = 2

@@ -24,7 +24,9 @@ jugador_2=Jugador() #creo jugador
 
 pelota=Pelota() #creo pelota
 
-while True:
+juego=True #variable de juego
+
+while True: #bucle de juego
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
 
     tecla=pygame.key.get_pressed() #obtengo las teclas presionadas
@@ -32,12 +34,52 @@ while True:
         jugador_1.izquierda() #muevo a la izquierda
     if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
         jugador_1.derecha() #muevo a la derecha
+    if tecla[pygame.K_UP] or tecla[pygame.K_w]: #si se presiona la tecla arriba
+        pelota.subiendo=True #muevo la pelota hacia arriba
+        pelota.moviendo_derecha=True #muevo la pelota a la derecha
 
     #Chequeo que el jugador no se salga de la pantalla
     if jugador_1.rect.x<0:
         jugador_1.rect.x=0
     if jugador_1.rect.x>ancho_ventana-ancho_jugador:
         jugador_1.rect.x=ancho_ventana-ancho_jugador
+
+    #Chequeo que la pelota no se salga de la pantalla
+    if pelota.rect.x<0:
+        pelota.moviendo_izquierda=False
+        pelota.moviendo_derecha=True
+    if pelota.rect.x>ancho_ventana-ancho_pelota:
+        pelota.moviendo_izquierda=True
+        pelota.moviendo_derecha=False
+    
+    #Detecto colisión con techo
+    if pygame.sprite.collide_rect(pelota,techo):
+        pelota.subiendo=False
+        pelota.bajando=True
+
+    #Detecto colisión con jugador 1
+    if pygame.sprite.collide_rect(pelota,jugador_1):
+        pelota.subiendo=True
+        pelota.bajando=False
+
+    #Detecto colisión con piso
+    if pygame.sprite.collide_rect(pelota,piso):
+        if juego==True:
+            print("Juego terminado")
+            juego=False
+        velocidad_pelota=0
+
+    if pelota.subiendo:
+        pelota.subir(velocidad_pelota)
+    
+    if pelota.bajando:
+        pelota.bajar(velocidad_pelota)
+
+    if pelota.moviendo_izquierda:
+        pelota.izquierda(velocidad_pelota)
+    
+    if pelota.moviendo_derecha:
+        pelota.derecha(velocidad_pelota)
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
