@@ -1,3 +1,3 @@
 # Proyecto-final
 
-Este proyecto es el final del "Bootcamp introduccón a la programación" de Código Facilito
+Este proyecto es el final del "Bootcamp introducción a la programación" de Código Facilito
