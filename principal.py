@@ -2,6 +2,7 @@ import pygame,sys #importo librerías
 from constantes import * #importo constantes
 from piso import Piso #importo clase piso
 from techo import Techo #importo clase techo
+from banner import Banner #importo clase banner
 
 pygame.init() #inicializo pygame
 
@@ -13,6 +14,8 @@ reloj=pygame.time.Clock() #creo reloj
 piso=Piso() #creo piso
 
 techo=Techo() #creo techo
+
+banner=Banner() #creo banner
 
 while True:
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
@@ -27,5 +30,7 @@ while True:
     piso.dibujar(ventana) #dibujo piso
 
     techo.dibujar(ventana) #dibujo techo
+
+    banner.dibujar(ventana) #dibujo banner
 
     pygame.display.update() #actualizo pantalla

@@ -8,7 +8,7 @@ class Techo(pygame.sprite.Sprite): #defino la clase techo
         self.image=pygame.Surface([ancho_ventana,alto_techo]) #creo superficie
         self.image.fill(color_techo) #color de techo
         self.rect=self.image.get_rect() #obtengo rectángulo de la superficie
-        self.rect.y=30 #posición en y
+        self.rect.y=alto_banner #posición en y
         self.rect.x=0 #posición en x
 
     def dibujar(self,superficie): #dibujo el piso
