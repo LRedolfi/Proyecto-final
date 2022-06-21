@@ -3,6 +3,7 @@ from constantes import * #importo constantes
 from piso import Piso #importo clase piso
 from techo import Techo #importo clase techo
 from banner import Banner #importo clase banner
+from jugador import Jugador #importo clase jugador
 
 pygame.init() #inicializo pygame
 
@@ -17,8 +18,22 @@ techo=Techo() #creo techo
 
 banner=Banner() #creo banner
 
+jugador_1=Jugador() #creo jugador
+
 while True:
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
+
+    tecla=pygame.key.get_pressed() #obtengo las teclas presionadas
+    if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
+        jugador_1.izquierda() #muevo a la izquierda
+    if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
+        jugador_1.derecha() #muevo a la derecha
+
+    #Chequeo que el jugador no se salga de la pantalla
+    if jugador_1.rect.x<0:
+        jugador_1.rect.x=0
+    if jugador_1.rect.x>ancho_ventana-ancho_jugador:
+        jugador_1.rect.x=ancho_ventana-ancho_jugador
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
@@ -32,5 +47,7 @@ while True:
     techo.dibujar(ventana) #dibujo techo
 
     banner.dibujar(ventana) #dibujo banner
+
+    jugador_1.dibujar(ventana) #dibujo jugador
 
     pygame.display.update() #actualizo pantalla
