@@ -5,6 +5,7 @@ from techo import Techo #importo clase techo
 from banner import Banner #importo clase banner
 from jugador import Jugador #importo clase jugador
 from pelota import Pelota #importo clase pelota
+from bloque import Bloque #importo clase bloque
 
 pygame.init() #inicializo pygame
 
@@ -23,6 +24,8 @@ jugador_1=Jugador() #creo jugador
 jugador_2=Jugador() #creo jugador
 
 pelota=Pelota() #creo pelota
+
+bloques=pygame.sprite.Group() #creo grupo de bloques
 
 juego=True #variable de juego
 
@@ -69,6 +72,7 @@ while True: #bucle de juego
             juego=False
         velocidad_pelota=0
 
+    #Llamo a los movimientos de la pelota
     if pelota.subiendo:
         pelota.subir(velocidad_pelota)
     
@@ -80,6 +84,14 @@ while True: #bucle de juego
     
     if pelota.moviendo_derecha:
         pelota.derecha(velocidad_pelota)
+
+    #Creo el array de bloques
+    if len(bloques)==0:
+        cantidad_bloques=ancho_ventana//ancho_bloque
+        for i in range(cantidad_bloques-1):
+            x_bloque=i*ancho_bloque+2*i
+            bloque=Bloque(x_bloque,alto_banner+alto_techo)
+            bloques.add(bloque)
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
@@ -97,5 +109,8 @@ while True: #bucle de juego
     jugador_1.dibujar(ventana) #dibujo jugador
 
     pelota.dibujar(ventana) #dibujo pelota
+
+    for bloque in bloques:
+        bloque.dibujar(ventana) #dibujo bloques
 
     pygame.display.update() #actualizo pantalla

@@ -7,6 +7,8 @@ ancho_jugador=50
 alto_jugador=120
 ancho_pelota=20
 alto_pelota=20
+ancho_bloque=30
+alto_bloque=30
 
 color_fondo = (10, 140, 120)
 color_piso = (200, 210, 220)
@@ -14,6 +16,7 @@ color_techo = (250, 250, 250)
 color_banner = (20, 20, 20)
 color_jugador = (255, 0, 0)
 color_pelota = (0, 0, 255)
+color_bloque = (0, 255, 0)
 
 velocidad_jugador = 5
 velocidad_pelota = 2
