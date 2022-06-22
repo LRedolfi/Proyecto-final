@@ -58,7 +58,7 @@ while True: #bucle de juego
         pelota.bajando=True
 
     #Detecto colisión con jugador 1
-    if pygame.sprite.collide_rect(pelota,jugador_1):
+    if pelota.rect.colliderect(jugador_1.cabeza):
         pelota.subiendo=True
         pelota.bajando=False
 

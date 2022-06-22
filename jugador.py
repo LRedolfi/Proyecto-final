@@ -13,6 +13,7 @@ class Jugador(pygame.sprite.Sprite): #defino la clase jugador
         self.velocidad=velocidad_jugador #velocidad del jugador
         self.velocidad_x=0 #velocidad en x
         self.velocidad_y=0 #velocidad en y
+        self.cabeza=pygame.Rect(self.rect.x,self.rect.y,self.rect.width,1) #cabeza del jugador
 
     def dibujar(self,superficie):
         superficie.blit(self.image,self.rect) #dibujo el jugador
@@ -20,7 +21,9 @@ class Jugador(pygame.sprite.Sprite): #defino la clase jugador
     #Defino la función para moverse hacia la izquierda
     def izquierda(self):
         self.rect.x-=self.velocidad
+        self.cabeza.x-=self.velocidad
 
     #Defino la función para moverse hacia la derecha
     def derecha(self):
         self.rect.x+=self.velocidad
+        self.cabeza.x+=self.velocidad
