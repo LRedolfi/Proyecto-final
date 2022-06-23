@@ -8,7 +8,7 @@ class Pelota(pygame.sprite.Sprite): #defino la clase pelota
         self.image=pygame.Surface([ancho_pelota,alto_pelota]) #creo superficie
         self.image.fill(color_pelota) #color de pelota
         self.rect=self.image.get_rect() #obtengo rectángulo de la superficie
-        self.rect.y=alto_ventana-alto_piso-alto_pelota-alto_jugador #posición en y
+        self.rect.y=alto_ventana-alto_piso-alto_pelota-alto_jugador+1 #posición en y
         self.rect.x=ancho_ventana//2-ancho_pelota//2 #posición en x
         self.velocidad=velocidad_pelota #velocidad de la pelota
         self.velocidad_x=velocidad_pelota #velocidad en x

@@ -44,8 +44,10 @@ while True: #bucle de juego
     #Chequeo que el jugador no se salga de la pantalla
     if jugador_1.rect.x<0:
         jugador_1.rect.x=0
+        jugador_1.cabeza.x=0
     if jugador_1.rect.x>ancho_ventana-ancho_jugador:
         jugador_1.rect.x=ancho_ventana-ancho_jugador
+        jugador_1.cabeza.x=ancho_ventana-ancho_jugador
 
     #Chequeo que la pelota no se salga de la pantalla
     if pelota.rect.x<0:
@@ -60,10 +62,17 @@ while True: #bucle de juego
         pelota.subiendo=False
         pelota.bajando=True
 
-    #Detecto colisión con jugador 1
+    #Detecto colisión con jugador 1 y muevo la pelota con el jugador 1
     if pelota.rect.colliderect(jugador_1.cabeza):
-        pelota.subiendo=True
-        pelota.bajando=False
+        if jugador_1.rect.x>0:
+            if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
+                pelota.izquierda(velocidad_jugador) #muevo a la izquierda
+        if jugador_1.rect.x<ancho_ventana-ancho_jugador:
+            if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
+                pelota.derecha(velocidad_jugador) #muevo a la derecha
+        if pelota.bajando: #si la pelota baja
+            pelota.subiendo=True
+            pelota.bajando=False
 
     #Detecto colisión con piso
     if pygame.sprite.collide_rect(pelota,piso):
