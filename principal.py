@@ -74,6 +74,25 @@ while True: #bucle de juego
             pelota.subiendo=True
             pelota.bajando=False
 
+    #Detecto la colisión con los bloques, depende donde le pego al bloque, la pelota se mueve en la dirección contraria, y elimino el bloque
+    for bloque in bloques:
+        if pelota.rect.colliderect(bloque.abajo):
+            pelota.subiendo=False
+            pelota.bajando=True
+            bloques.remove(bloque) #elimino el bloque
+        if pelota.rect.colliderect(bloque.arriba):
+            pelota.subiendo=True
+            pelota.bajando=False
+            bloques.remove(bloque) #elimino el bloque
+        if pelota.rect.colliderect(bloque.izquierda):
+            pelota.moviendo_izquierda=True
+            pelota.moviendo_derecha=False
+            bloques.remove(bloque) #elimino el bloque
+        if pelota.rect.colliderect(bloque.derecha):
+            pelota.moviendo_izquierda=False
+            pelota.moviendo_derecha=True
+            bloques.remove(bloque) #elimino el bloque
+
     #Detecto colisión con piso
     if pygame.sprite.collide_rect(pelota,piso):
         if juego==True:
