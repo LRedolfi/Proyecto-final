@@ -61,7 +61,7 @@ while True: #bucle de juego
         pelota.bajando=True
 
     #Detecto colisión con jugador 1 y muevo la pelota con el jugador 1
-    if pelota.rect.colliderect(jugador_1.cabeza):
+    if pelota.abajo.colliderect(jugador_1.cabeza):
         if jugador_1.rect.x>0:
             if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
                 pelota.izquierda(velocidad_jugador) #muevo a la izquierda
