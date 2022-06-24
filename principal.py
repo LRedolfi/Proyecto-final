@@ -27,8 +27,6 @@ pelota=Pelota() #creo pelota
 
 bloques=pygame.sprite.Group() #creo grupo de bloques
 
-juego=True #variable de juego
-
 while True: #bucle de juego
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
 
@@ -80,18 +78,22 @@ while True: #bucle de juego
             pelota.subiendo=False
             pelota.bajando=True
             bloques.remove(bloque) #elimino el bloque
+            puntaje+=100 #aumento el puntaje
         if pelota.rect.colliderect(bloque.arriba):
             pelota.subiendo=True
             pelota.bajando=False
             bloques.remove(bloque) #elimino el bloque
+            puntaje+=100 #aumento el puntaje
         if pelota.rect.colliderect(bloque.izquierda):
             pelota.moviendo_izquierda=True
             pelota.moviendo_derecha=False
             bloques.remove(bloque) #elimino el bloque
+            puntaje+=100 #aumento el puntaje
         if pelota.rect.colliderect(bloque.derecha):
             pelota.moviendo_izquierda=False
             pelota.moviendo_derecha=True
             bloques.remove(bloque) #elimino el bloque
+            puntaje+=100 #aumento el puntaje
 
     #Detecto colisión con piso
     if pygame.sprite.collide_rect(pelota,piso):
@@ -140,5 +142,7 @@ while True: #bucle de juego
 
     for bloque in bloques:
         bloque.dibujar(ventana) #dibujo bloques
+    
+    banner.dibujar_texto(ventana,puntaje,nivel) #dibujo texto
 
     pygame.display.update() #actualizo pantalla

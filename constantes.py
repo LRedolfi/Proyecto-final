@@ -20,3 +20,11 @@ color_bloque = (0, 255, 0)
 
 velocidad_jugador = 5
 velocidad_pelota = 2
+
+fuente="Arial"
+
+puntaje=0
+puntaje_máximo=0
+nivel=1
+nivel_máximo=1
+juego=True
