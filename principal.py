@@ -31,9 +31,9 @@ while True: #bucle de juego
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
 
     tecla=pygame.key.get_pressed() #obtengo las teclas presionadas
-    if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
+    if (tecla[pygame.K_LEFT] or tecla[pygame.K_a]) and pausa==False: #si se presiona la tecla izquierda
         jugador_1.izquierda(velocidad_jugador) #muevo a la izquierda
-    if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
+    if (tecla[pygame.K_RIGHT] or tecla[pygame.K_d]) and pausa==False: #si se presiona la tecla derecha
         jugador_1.derecha(velocidad_jugador) #muevo a la derecha
     
     #Chequeo que el jugador no se salga de la pantalla
@@ -63,7 +63,8 @@ while True: #bucle de juego
             pelota.subiendo=True #muevo la pelota hacia arriba
             pelota.moviendo_derecha=True #muevo la pelota a la derecha
             juego=True #cambio el estado del juego
-            velocidad_pelota=nivel+1 #cambio la velocidad de la pelota
+            if nivel<5:
+                velocidad_pelota=nivel+1 #cambio la velocidad de la pelota
             pelota.moviendo_izquierda=False #no muevo la pelota a la izquierda
         if jugador_1.rect.x>0:
             if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
@@ -74,6 +75,15 @@ while True: #bucle de juego
         if pelota.bajando: #si la pelota baja
             pelota.subiendo=True
             pelota.bajando=False
+
+    #Pausa del juego
+    if tecla[pygame.K_r] and pausa == True:
+        pausa=False
+        velocidad_pelota=nivel+1
+    
+    if tecla[pygame.K_p] and pausa == False:
+        pausa=True
+        velocidad_pelota=0
 
     #Detecto la colisión con los bloques, depende donde le pego al bloque, la pelota se mueve en la dirección contraria, y elimino el bloque
     for bloque in bloques:
@@ -101,6 +111,7 @@ while True: #bucle de juego
     #Detecto colisión con piso
     if pygame.sprite.collide_rect(pelota,piso):
         if juego==True:
+            vidas-=1 #resto una vida
             juego=False
             jugando=False
         velocidad_pelota=0
@@ -118,6 +129,14 @@ while True: #bucle de juego
     if pelota.moviendo_derecha:
         pelota.derecha(velocidad_pelota)
 
+    if nivel>=5:
+        ancho_bloque=ancho_bloque-5
+        alto_bloque=alto_bloque-5
+
+    if nivel>=10:
+        ancho_bloque=ancho_bloque-5
+        alto_bloque=alto_bloque-5
+    
     #Creo el array de bloques
     if len(bloques)==0:
         cantidad_bloques=ancho_ventana//ancho_bloque
@@ -125,13 +144,13 @@ while True: #bucle de juego
             for i in range(cantidad_bloques-1):
                 y_bloque=o*alto_bloque+2*o
                 x_bloque=i*ancho_bloque+2*i
-                bloque=Bloque(x_bloque,alto_banner+alto_techo+y_bloque)
-                bloques.add(bloque)
+                bloque=Bloque(x_bloque,alto_banner+alto_techo+y_bloque,ancho_bloque,alto_bloque)
+                if x_bloque<ancho_ventana-ancho_bloque:
+                    bloques.add(bloque)
         if juego==True:
             nivel+=1
             velocidad_jugador+=1
             velocidad_pelota+=1
-
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
@@ -153,9 +172,9 @@ while True: #bucle de juego
     for bloque in bloques:
         bloque.dibujar(ventana) #dibujo bloques
     
-    banner.dibujar_texto(ventana,puntaje,nivel,jugando) #dibujo texto
+    banner.dibujar_texto(ventana,puntaje,nivel,jugando,vidas,pausa) #dibujo texto
 
-    if jugando==False and tecla[pygame.K_r]:
+    if jugando==False and tecla[pygame.K_r] and vidas>0:
         jugador_1.dibujar_nuevamente(ventana)
         pelota.dibujar_nuevamente(ventana)
         jugando=True
