@@ -30,9 +30,9 @@ class Banner(pygame.sprite.Sprite): #defino la clase banner
         rectángulo.midtop=(x,y)
         superficie.blit(texto,rectángulo)
 
-    def dibujar_texto(self,superficie,puntaje,nivel):
+    def dibujar_texto(self,superficie,puntaje,nivel,jugando):
         self.mostrar_texto(self.formato_puntaje(puntaje),24,color_techo,ancho_ventana//2,0,superficie)
         self.mostrar_texto(self.formato_nivel(nivel),24,color_techo,60,0,superficie)
-        if not juego:
-            self.mostrar_texto('PERDISTE!',50,color_techo,ancho_ventana//2,alto_ventana//2)
-            self.mostrar_texto('Presiona r para reiniciar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50)
+        if not jugando:
+            self.mostrar_texto('PERDISTE!',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
+            self.mostrar_texto('Presiona r para reiniciar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)

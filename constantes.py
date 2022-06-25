@@ -27,4 +27,5 @@ puntaje=0
 puntaje_máximo=0
 nivel=1
 nivel_máximo=1
-juego=True
+juego=False
+jugando=True

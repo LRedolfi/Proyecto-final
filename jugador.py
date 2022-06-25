@@ -18,12 +18,18 @@ class Jugador(pygame.sprite.Sprite): #defino la clase jugador
     def dibujar(self,superficie):
         superficie.blit(self.image,self.rect) #dibujo el jugador
 
+    def dibujar_nuevamente(self,superficie):
+        self.rect.y=alto_ventana-alto_jugador-alto_piso
+        self.rect.x=ancho_ventana//2-ancho_jugador//2
+        self.cabeza=pygame.Rect(self.rect.x,self.rect.y,self.rect.width,1)
+        superficie.blit(self.image,self.rect)
+
     #Defino la función para moverse hacia la izquierda
-    def izquierda(self):
-        self.rect.x-=self.velocidad
-        self.cabeza.x-=self.velocidad
+    def izquierda(self,velocidad):
+        self.rect.x-=velocidad
+        self.cabeza.x-=velocidad
 
     #Defino la función para moverse hacia la derecha
-    def derecha(self):
-        self.rect.x+=self.velocidad
-        self.cabeza.x+=self.velocidad
+    def derecha(self,velocidad):
+        self.rect.x+=velocidad
+        self.cabeza.x+=velocidad

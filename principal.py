@@ -32,13 +32,10 @@ while True: #bucle de juego
 
     tecla=pygame.key.get_pressed() #obtengo las teclas presionadas
     if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
-        jugador_1.izquierda() #muevo a la izquierda
+        jugador_1.izquierda(velocidad_jugador) #muevo a la izquierda
     if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
-        jugador_1.derecha() #muevo a la derecha
-    if tecla[pygame.K_UP] or tecla[pygame.K_w]: #si se presiona la tecla arriba
-        pelota.subiendo=True #muevo la pelota hacia arriba
-        pelota.moviendo_derecha=True #muevo la pelota a la derecha
-
+        jugador_1.derecha(velocidad_jugador) #muevo a la derecha
+    
     #Chequeo que el jugador no se salga de la pantalla
     if jugador_1.rect.x<0:
         jugador_1.rect.x=0
@@ -62,6 +59,12 @@ while True: #bucle de juego
 
     #Detecto colisión con jugador 1 y muevo la pelota con el jugador 1
     if pelota.abajo.colliderect(jugador_1.cabeza):
+        if tecla[pygame.K_UP] or tecla[pygame.K_w] and juego==False: #si se presiona la tecla arriba
+            pelota.subiendo=True #muevo la pelota hacia arriba
+            pelota.moviendo_derecha=True #muevo la pelota a la derecha
+            juego=True #cambio el estado del juego
+            velocidad_pelota=nivel+1 #cambio la velocidad de la pelota
+            pelota.moviendo_izquierda=False #no muevo la pelota a la izquierda
         if jugador_1.rect.x>0:
             if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
                 pelota.izquierda(velocidad_jugador) #muevo a la izquierda
@@ -98,8 +101,8 @@ while True: #bucle de juego
     #Detecto colisión con piso
     if pygame.sprite.collide_rect(pelota,piso):
         if juego==True:
-            print("Juego terminado")
             juego=False
+            jugando=False
         velocidad_pelota=0
 
     #Llamo a los movimientos de la pelota
@@ -118,10 +121,17 @@ while True: #bucle de juego
     #Creo el array de bloques
     if len(bloques)==0:
         cantidad_bloques=ancho_ventana//ancho_bloque
-        for i in range(cantidad_bloques-1):
-            x_bloque=i*ancho_bloque+2*i
-            bloque=Bloque(x_bloque,alto_banner+alto_techo)
-            bloques.add(bloque)
+        for o in range(nivel):
+            for i in range(cantidad_bloques-1):
+                y_bloque=o*alto_bloque+2*o
+                x_bloque=i*ancho_bloque+2*i
+                bloque=Bloque(x_bloque,alto_banner+alto_techo+y_bloque)
+                bloques.add(bloque)
+        if juego==True:
+            nivel+=1
+            velocidad_jugador+=1
+            velocidad_pelota+=1
+
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
@@ -143,6 +153,11 @@ while True: #bucle de juego
     for bloque in bloques:
         bloque.dibujar(ventana) #dibujo bloques
     
-    banner.dibujar_texto(ventana,puntaje,nivel) #dibujo texto
+    banner.dibujar_texto(ventana,puntaje,nivel,jugando) #dibujo texto
+
+    if jugando==False and tecla[pygame.K_r]:
+        jugador_1.dibujar_nuevamente(ventana)
+        pelota.dibujar_nuevamente(ventana)
+        jugando=True
 
     pygame.display.update() #actualizo pantalla
