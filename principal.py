@@ -27,6 +27,10 @@ pelota=Pelota() #creo pelota
 
 bloques=pygame.sprite.Group() #creo grupo de bloques
 
+archivo=open("puntaje.txt","r")
+puntaje_máximo=int(archivo.read())
+archivo.close()
+
 while True: #bucle de juego
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
 
@@ -189,5 +193,11 @@ while True: #bucle de juego
         puntaje=0
         vidas=3
         bloques.empty()
+
+    if puntaje>puntaje_máximo:
+        puntaje_máximo=puntaje
+        archivo=open("puntaje.txt","w")
+        archivo.write(str(puntaje_máximo))
+        archivo.close()
 
     pygame.display.update() #actualizo pantalla
