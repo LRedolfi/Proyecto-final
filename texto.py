@@ -3,7 +3,7 @@ from constantes import * #importo constantes
 from pygame import font
 from pygame.font import Font
 
-class Banner(pygame.sprite.Sprite): #defino la clase banner
+class Texto(pygame.sprite.Sprite): #defino la clase texto
     def __init__(self): #constructor de la clase
         pygame.sprite.Sprite.__init__(self) #llamo al constructor de la clase padre
 
@@ -37,9 +37,10 @@ class Banner(pygame.sprite.Sprite): #defino la clase banner
         self.mostrar_texto(self.formato_puntaje(puntaje),24,color_techo,ancho_ventana//2,0,superficie)
         self.mostrar_texto(self.formato_nivel(nivel),24,color_techo,60,0,superficie)
         self.mostrar_texto(self.formato_vidas(vidas),24,color_techo,750,0,superficie)
-        if not jugando:
-            self.mostrar_texto('PERDISTE!',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
-            self.mostrar_texto('Presiona r para reiniciar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)
+        self.mostrar_texto('Para pausar el juego presiona P',24,color_banner,ancho_ventana//2,alto_ventana-30,superficie)
+        if not jugando and vidas>0:
+            self.mostrar_texto('Perdiste una vida!',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
+            self.mostrar_texto('Presiona r para continuar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)
         if pausa:
             self.mostrar_texto('Juego pausado',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
             self.mostrar_texto('Presiona r para continuar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)

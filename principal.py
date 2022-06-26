@@ -2,7 +2,7 @@ import pygame,sys #importo librerías
 from constantes import * #importo constantes
 from piso import Piso #importo clase piso
 from techo import Techo #importo clase techo
-from banner import Banner #importo clase banner
+from texto import Texto #importo clase banner
 from jugador import Jugador #importo clase jugador
 from pelota import Pelota #importo clase pelota
 from bloque import Bloque #importo clase bloque
@@ -18,7 +18,7 @@ piso=Piso() #creo piso
 
 techo=Techo() #creo techo
 
-banner=Banner() #creo banner
+banner=Texto() #creo banner
 
 jugador_1=Jugador() #creo jugador
 jugador_2=Jugador() #creo jugador
@@ -150,7 +150,9 @@ while True: #bucle de juego
         if juego==True:
             nivel+=1
             velocidad_jugador+=1
-            velocidad_pelota+=1
+            velocidad_pelota=0
+            jugador_1.dibujar_nuevamente(ventana)
+            pelota.dibujar_nuevamente(ventana)
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
