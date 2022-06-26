@@ -41,6 +41,9 @@ class Texto(pygame.sprite.Sprite): #defino la clase texto
         if not jugando and vidas>0:
             self.mostrar_texto('Perdiste una vida!',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
             self.mostrar_texto('Presiona r para continuar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)
+        if not jugando and vidas==0:
+            self.mostrar_texto('PERDISTE!',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
+            self.mostrar_texto('Presiona r para reiniciar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)
         if pausa:
             self.mostrar_texto('Juego pausado',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
             self.mostrar_texto('Presiona r para continuar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)

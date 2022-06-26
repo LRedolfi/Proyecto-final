@@ -29,5 +29,5 @@ nivel=1
 nivel_máximo=1
 juego=False
 jugando=True
-vidas=2
+vidas=3
 pausa=False

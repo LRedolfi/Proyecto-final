@@ -181,4 +181,13 @@ while True: #bucle de juego
         pelota.dibujar_nuevamente(ventana)
         jugando=True
 
+    if jugando==False and tecla[pygame.K_r] and vidas==0:
+        jugador_1.dibujar_nuevamente(ventana)
+        pelota.dibujar_nuevamente(ventana)
+        jugando=True
+        nivel=1
+        puntaje=0
+        vidas=3
+        bloques.empty()
+
     pygame.display.update() #actualizo pantalla
