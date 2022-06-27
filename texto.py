@@ -26,6 +26,9 @@ class Texto(pygame.sprite.Sprite): #defino la clase texto
     def formato_vidas(self,vidas):
         return "Vidas: {}".format(vidas)
 
+    def formato_record(self,puntaje_máximo):
+        return "Record: {}".format(puntaje_máximo)
+
     def mostrar_texto(self,texto,tamaño,color,x,y,superficie):
         fuente=Font(self.fuente,tamaño)
         texto=fuente.render(texto,True,color)
@@ -33,10 +36,11 @@ class Texto(pygame.sprite.Sprite): #defino la clase texto
         rectángulo.midtop=(x,y)
         superficie.blit(texto,rectángulo)
 
-    def dibujar_texto(self,superficie,puntaje,nivel,jugando,vidas,pausa):
-        self.mostrar_texto(self.formato_puntaje(puntaje),24,color_techo,ancho_ventana//2,0,superficie)
+    def dibujar_texto(self,superficie,puntaje,nivel,jugando,vidas,pausa,ganador,puntaje_máximo):
+        self.mostrar_texto(self.formato_puntaje(puntaje),24,color_techo,ancho_ventana//2+100,0,superficie)
         self.mostrar_texto(self.formato_nivel(nivel),24,color_techo,60,0,superficie)
         self.mostrar_texto(self.formato_vidas(vidas),24,color_techo,750,0,superficie)
+        self.mostrar_texto(self.formato_record(puntaje_máximo),24,color_techo,ancho_ventana//2-100,0,superficie)
         self.mostrar_texto('Para pausar el juego presiona P',24,color_banner,ancho_ventana//2,alto_ventana-30,superficie)
         if not jugando and vidas>0:
             self.mostrar_texto('Perdiste una vida!',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
@@ -47,3 +51,7 @@ class Texto(pygame.sprite.Sprite): #defino la clase texto
         if pausa:
             self.mostrar_texto('Juego pausado',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie)
             self.mostrar_texto('Presiona r para continuar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+50,superficie)
+        if ganador and vidas==0:
+            self.mostrar_texto('Felicidades! Tu puntaje {} fue el mas alto!'.format(puntaje),25,color_techo,ancho_ventana//2,alto_ventana//2+75,superficie)
+        if not ganador and vidas==0:
+            self.mostrar_texto('Tu puntaje no supero el puntaje máximo de {}'.format(puntaje_máximo),25,color_techo,ancho_ventana//2,alto_ventana//2+75,superficie)

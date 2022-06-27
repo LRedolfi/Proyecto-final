@@ -178,7 +178,7 @@ while True: #bucle de juego
     for bloque in bloques:
         bloque.dibujar(ventana) #dibujo bloques
     
-    banner.dibujar_texto(ventana,puntaje,nivel,jugando,vidas,pausa) #dibujo texto
+    banner.dibujar_texto(ventana,puntaje,nivel,jugando,vidas,pausa,ganador,puntaje_máximo) #dibujo texto
 
     if jugando==False and tecla[pygame.K_r] and vidas>0:
         jugador_1.dibujar_nuevamente(ventana)
@@ -193,11 +193,13 @@ while True: #bucle de juego
         puntaje=0
         vidas=3
         bloques.empty()
+        ganador=False
 
     if puntaje>puntaje_máximo:
         puntaje_máximo=puntaje
         archivo=open("puntaje.txt","w")
         archivo.write(str(puntaje_máximo))
         archivo.close()
+        ganador=True
 
     pygame.display.update() #actualizo pantalla

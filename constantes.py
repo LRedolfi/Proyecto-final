@@ -31,3 +31,4 @@ juego=False
 jugando=True
 vidas=3
 pausa=False
+ganador=False
