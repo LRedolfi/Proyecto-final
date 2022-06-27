@@ -5,8 +5,7 @@ class Pelota(pygame.sprite.Sprite): #defino la clase pelota
     def __init__(self): #constructor de la clase
         pygame.sprite.Sprite.__init__(self) #llamo al constructor de la clase padre
 
-        self.image=pygame.Surface([ancho_pelota,alto_pelota]) #creo superficie
-        self.image.fill(color_pelota) #color de pelota
+        self.image=pygame.image.load(os.path.join(dirImágenes,'pelota.png')) #creo superficie
         self.rect=self.image.get_rect() #obtengo rectángulo de la superficie
         self.rect.y=alto_ventana-alto_piso-alto_pelota-alto_jugador+1 #posición en y
         self.rect.x=ancho_ventana//2-ancho_pelota//2 #posición en x

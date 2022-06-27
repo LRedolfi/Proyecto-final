@@ -10,7 +10,7 @@ from bloque import Bloque #importo clase bloque
 pygame.init() #inicializo pygame
 
 ventana=pygame.display.set_mode((ancho_ventana,alto_ventana)) #creo ventana
-pygame.display.set_caption("Juego proyecto final") #título de la ventana
+pygame.display.set_caption("Invasión arácnida") #título de la ventana
 
 reloj=pygame.time.Clock() #creo reloj
 
@@ -171,7 +171,7 @@ while True: #bucle de juego
 
     banner.dibujar(ventana) #dibujo banner
 
-    jugador_1.dibujar(ventana) #dibujo jugador
+    jugador_1.dibujar(ventana,jugando) #dibujo jugador
 
     pelota.dibujar(ventana) #dibujo pelota
 
