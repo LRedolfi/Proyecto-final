@@ -25,6 +25,8 @@ jugador_2=Jugador() #creo jugador
 
 pelota=Pelota() #creo pelota
 
+sonido_rebote=pygame.mixer.Sound(os.path.join(dirSonidos,'rebote.wav')) #creo sonido rebote
+
 bloques=pygame.sprite.Group() #creo grupo de bloques
 
 archivo=open("puntaje.txt","r")
@@ -52,14 +54,17 @@ while True: #bucle de juego
     if pelota.rect.x<0:
         pelota.moviendo_izquierda=False
         pelota.moviendo_derecha=True
+        sonido_rebote.play()
     if pelota.rect.x>ancho_ventana-ancho_pelota:
         pelota.moviendo_izquierda=True
         pelota.moviendo_derecha=False
+        sonido_rebote.play()
     
     #Detecto colisión con techo
     if pygame.sprite.collide_rect(pelota,techo):
         pelota.subiendo=False
         pelota.bajando=True
+        sonido_rebote.play()
 
     #Detecto colisión con jugador 1 y muevo la pelota con el jugador 1
     if pelota.abajo.colliderect(jugador_1.cabeza):
@@ -69,6 +74,8 @@ while True: #bucle de juego
             juego=True #cambio el estado del juego
             if nivel<5:
                 velocidad_pelota=nivel+1 #cambio la velocidad de la pelota
+            else:
+                velocidad_pelota=5
             pelota.moviendo_izquierda=False #no muevo la pelota a la izquierda
         if jugador_1.rect.x>0:
             if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
@@ -77,13 +84,17 @@ while True: #bucle de juego
             if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
                 pelota.derecha(velocidad_jugador) #muevo a la derecha
         if pelota.bajando: #si la pelota baja
+            sonido_rebote.play()
             pelota.subiendo=True
             pelota.bajando=False
 
     #Pausa del juego
     if tecla[pygame.K_r] and pausa == True:
         pausa=False
-        velocidad_pelota=nivel+1
+        if nivel<5:
+                velocidad_pelota=nivel+1 #cambio la velocidad de la pelota
+        else:
+            velocidad_pelota=5
     
     if tecla[pygame.K_p] and pausa == False:
         pausa=True
@@ -96,21 +107,29 @@ while True: #bucle de juego
             pelota.bajando=True
             bloques.remove(bloque) #elimino el bloque
             puntaje+=100 #aumento el puntaje
+            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+            sonido_araña.play()
         if pelota.rect.colliderect(bloque.arriba):
             pelota.subiendo=True
             pelota.bajando=False
             bloques.remove(bloque) #elimino el bloque
             puntaje+=100 #aumento el puntaje
+            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+            sonido_araña.play()
         if pelota.rect.colliderect(bloque.izquierda):
             pelota.moviendo_izquierda=True
             pelota.moviendo_derecha=False
             bloques.remove(bloque) #elimino el bloque
             puntaje+=100 #aumento el puntaje
+            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+            sonido_araña.play()
         if pelota.rect.colliderect(bloque.derecha):
             pelota.moviendo_izquierda=False
             pelota.moviendo_derecha=True
             bloques.remove(bloque) #elimino el bloque
             puntaje+=100 #aumento el puntaje
+            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+            sonido_araña.play()
 
     #Detecto colisión con piso
     if pygame.sprite.collide_rect(pelota,piso):
@@ -118,6 +137,8 @@ while True: #bucle de juego
             vidas-=1 #resto una vida
             juego=False
             jugando=False
+            sonido_perder=pygame.mixer.Sound(os.path.join(dirSonidos,'perder.wav'))
+            sonido_perder.play()
         velocidad_pelota=0
 
     #Llamo a los movimientos de la pelota
@@ -133,18 +154,14 @@ while True: #bucle de juego
     if pelota.moviendo_derecha:
         pelota.derecha(velocidad_pelota)
 
-    if nivel>=5:
-        ancho_bloque=ancho_bloque-5
-        alto_bloque=alto_bloque-5
-
-    if nivel>=10:
-        ancho_bloque=ancho_bloque-5
-        alto_bloque=alto_bloque-5
-    
     #Creo el array de bloques
     if len(bloques)==0:
         cantidad_bloques=ancho_ventana//ancho_bloque
-        for o in range(nivel):
+        if nivel<=10:
+            máximas_filas=nivel
+        else:
+            máximas_filas=10
+        for o in range(máximas_filas):
             for i in range(cantidad_bloques-1):
                 y_bloque=o*alto_bloque+2*o
                 x_bloque=i*ancho_bloque+2*i

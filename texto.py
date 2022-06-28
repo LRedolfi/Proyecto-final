@@ -52,6 +52,6 @@ class Texto(pygame.sprite.Sprite): #defino la clase texto
             self.mostrar_texto('Juego pausado',50,color_techo,ancho_ventana//2,alto_ventana//2,superficie,color_fondo)
             self.mostrar_texto('Presiona r para continuar el juego',25,color_techo,ancho_ventana//2,alto_ventana//2+60,superficie,color_fondo)
         if ganador and vidas==0:
-            self.mostrar_texto('Felicidades! Tu puntaje {} fue el mas alto!'.format(puntaje),25,color_techo,ancho_ventana//2,alto_ventana//2+75,superficie,color_fondo)
+            self.mostrar_texto('Felicidades! Tu puntaje {} fue el mas alto!'.format(puntaje),25,color_techo,ancho_ventana//2,alto_ventana//2+85,superficie,color_fondo)
         if not ganador and vidas==0:
-            self.mostrar_texto('Tu puntaje no supero el puntaje máximo de {}'.format(puntaje_máximo),25,color_techo,ancho_ventana//2,alto_ventana//2+75,superficie,color_fondo)
+            self.mostrar_texto('Tu puntaje no supero el puntaje máximo de {}'.format(puntaje_máximo),25,color_techo,ancho_ventana//2,alto_ventana//2+85,superficie,color_fondo)
