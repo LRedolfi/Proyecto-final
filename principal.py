@@ -163,7 +163,7 @@ while True: #bucle de juego
             pygame.quit() #se cierra pygame
             sys.exit() #se cierra programa
 
-    ventana.fill(color_fondo) #Color de fondo
+    ventana.blit(pygame.image.load(os.path.join(dirImágenes,'fondo.jpg')),(0,0)) #Color de fondo
 
     piso.dibujar(ventana) #dibujo piso
 
