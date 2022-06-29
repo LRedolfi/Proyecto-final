@@ -6,6 +6,7 @@ from texto import Texto #importo clase banner
 from jugador import Jugador #importo clase jugador
 from pelota import Pelota #importo clase pelota
 from bloque import Bloque #importo clase bloque
+from menu import Menu #importo clase menu
 
 pygame.init() #inicializo pygame
 
@@ -32,6 +33,10 @@ bloques=pygame.sprite.Group() #creo grupo de bloques
 archivo=open("puntaje.txt","r")
 puntaje_máximo=int(archivo.read())
 archivo.close()
+
+menu=Menu() #creo menu
+
+menu.dibujar(ventana,puntaje_máximo) #dibujo menu
 
 while True: #bucle de juego
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps
