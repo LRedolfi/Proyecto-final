@@ -27,7 +27,7 @@ class Texto(pygame.sprite.Sprite): #defino la clase texto
         return "Vidas: {}".format(vidas)
 
     def formato_record(self,puntaje_máximo):
-        return "Record: {}".format(puntaje_máximo)
+        return "Récord: {}".format(puntaje_máximo)
 
     def mostrar_texto(self,texto,tamaño,color,x,y,superficie,f):
         fuente=Font(self.fuente,tamaño)
