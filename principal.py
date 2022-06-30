@@ -30,9 +30,12 @@ sonido_rebote=pygame.mixer.Sound(os.path.join(dirSonidos,'rebote.wav')) #creo so
 
 bloques=pygame.sprite.Group() #creo grupo de bloques
 
-archivo=open("puntaje.txt","r")
-puntaje_máximo=int(archivo.read())
-archivo.close()
+try:
+    archivo=open("puntaje.txt","r")
+    puntaje_máximo=int(archivo.read())
+    archivo.close()
+except:
+    pass
 
 menu=Menu() #creo menu
 
