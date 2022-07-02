@@ -9,7 +9,7 @@ class Jugador(pygame.sprite.Sprite): #defino la clase jugador
         self.imágenes=(
             pygame.image.load(os.path.join(dirImágenes,'arriba_der.png')),
             pygame.image.load(os.path.join(dirImágenes,'arriba_izq.png')),
-            pygame.image.load(os.path.join(dirImágenes,'jugador.png')),
+            pygame.image.load(os.path.join(dirImágenes,'perdedor.png')),
         )
 
         self.image=self.imágenes[0]#creo superficie
