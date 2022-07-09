@@ -8,6 +8,7 @@ from pelota import Pelota #importo clase pelota
 from bloque import Bloque #importo clase bloque
 from bienvenida import Bienvenida #importo clase menu
 from bienvenida_2 import Bienvenida_2 #importo clase menu
+from bienvenida_3 import Bienvenida_3 #importo clase menu
 
 pygame.init() #inicializo pygame
 
@@ -43,6 +44,10 @@ bienvenida=Bienvenida() #creo menu
 bienvenida.dibujar(ventana) #dibujo menu
 
 bienvenida=Bienvenida_2() #creo menu
+
+bienvenida.dibujar(ventana) #dibujo menu
+
+bienvenida=Bienvenida_3() #creo menu
 
 bienvenida.dibujar(ventana) #dibujo menu
 
