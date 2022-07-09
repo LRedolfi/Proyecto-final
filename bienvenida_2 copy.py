@@ -3,34 +3,29 @@ from pygame import time
 from constantes import *
 import sys
 from texto import Texto #importo clase banner
+from jugador import Jugador
 
-class Menu(pygame.sprite.Sprite):
+class Bienvenida_2(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
 
         self.image=pygame.image.load(os.path.join(dirImágenes,'fondo_menu.jpg')) #creo superficie
         self.imagen_piso=pygame.image.load(os.path.join(dirImágenes,'piso_menu.jpg'))
-        self.imágenes_jugador=(
-            pygame.image.load(os.path.join(dirImágenes,'arriba_izq.png')),
-            pygame.image.load(os.path.join(dirImágenes,'jugador.png')),)
-        self.imágenes_araña=(
-            pygame.image.load(os.path.join(dirImágenes,'araña_abajo.png')),
-            pygame.image.load(os.path.join(dirImágenes,'araña_arriba.png')),)
-        self.imagen_jugador=self.imágenes_jugador[0]
-        self.imagen_araña=self.imágenes_araña[0]
+        self.imágenes_flechas=(
+            pygame.image.load(os.path.join(dirImágenes,'tecla_arr.png')),
+            pygame.image.load(os.path.join(dirImágenes,'tecla_izq.png')),)
+        self.imagen_flecha=self.imágenes_flechas[0]
         self.rect=self.image.get_rect()
         self.rect_piso=self.imagen_piso.get_rect()
-        self.rect_jugador=self.imagen_jugador.get_rect()
-        self.rect_araña=self.imagen_araña.get_rect()
+        self.rect_flecha=self.imagen_flecha.get_rect()
         self.rect.y=0
         self.rect.x=0
         self.rect_piso.y=alto_ventana-147
         self.rect_piso.x=0
-        self.rect_jugador.y=alto_ventana-alto_jugador
-        self.rect_jugador.x=ancho_ventana//2-ancho_jugador//2
-        self.rect_araña.y=alto_ventana-147
-        self.rect_araña.x=ancho_ventana//2+ancho_ventana//4
+        self.rect_flecha.y=alto_ventana-147
+        self.rect_flecha.x=ancho_ventana//2+ancho_ventana//4
         self.texto=Texto()
+        self.jugador=Jugador()
 
     def dibujar(self,superficie,puntaje):
         superficie.blit(self.image,self.rect)

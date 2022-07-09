@@ -6,7 +6,8 @@ from texto import Texto #importo clase banner
 from jugador import Jugador #importo clase jugador
 from pelota import Pelota #importo clase pelota
 from bloque import Bloque #importo clase bloque
-from menu import Menu #importo clase menu
+from bienvenida import Bienvenida #importo clase menu
+from bienvenida_2 import Bienvenida_2 #importo clase menu
 
 pygame.init() #inicializo pygame
 
@@ -37,9 +38,13 @@ try:
 except:
     pass
 
-menu=Menu() #creo menu
+bienvenida=Bienvenida() #creo menu
 
-menu.dibujar(ventana,puntaje_máximo) #dibujo menu
+bienvenida.dibujar(ventana) #dibujo menu
+
+bienvenida=Bienvenida_2() #creo menu
+
+bienvenida.dibujar(ventana) #dibujo menu
 
 while True: #bucle de juego
     reloj.tick(60) #tiempo de refresco de pantalla 60 fps

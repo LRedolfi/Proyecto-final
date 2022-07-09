@@ -12,7 +12,7 @@ class Jugador(pygame.sprite.Sprite): #defino la clase jugador
             pygame.image.load(os.path.join(dirImágenes,'perdedor.png')),
         )
 
-        self.image=self.imágenes[0]#creo superficie
+        self.image=self.imágenes[1]#creo superficie
         self.rect=self.image.get_rect() #obtengo rectángulo de la superficie
         self.rect.y=alto_ventana-alto_jugador-alto_piso #posición en y
         self.rect.x=ancho_ventana//2-ancho_jugador//2 #posición en x
