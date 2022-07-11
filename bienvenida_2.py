@@ -34,8 +34,11 @@ class Bienvenida_2(pygame.sprite.Sprite):
     def dibujar(self,superficie):
         superficie.blit(self.image,self.rect)
         superficie.blit(self.imagen_piso,self.rect_piso)
+        self.texto.mostrar_texto('Ayuda a Cody a limpiar su casa de las arañas!',33,color_banner,ancho_ventana//2+2,10,superficie,None)
         self.texto.mostrar_texto('Ayuda a Cody a limpiar su casa de las arañas!',33,color_techo,ancho_ventana//2,10,superficie,None)
+        self.texto.mostrar_texto('Con la flecha arriba inicia el juego',33,color_banner,ancho_ventana//2+2,60,superficie,None)
         self.texto.mostrar_texto('Con la flecha arriba inicia el juego',33,color_techo,ancho_ventana//2,60,superficie,None)
+        self.texto.mostrar_texto('Presiona cualquier tecla para continuar',33,color_banner,ancho_ventana//2+2,110,superficie,None)
         self.texto.mostrar_texto('Presiona cualquier tecla para continuar',33,color_techo,ancho_ventana//2,110,superficie,None)
         self.jugador.dibujar_nuevamente(superficie)
         self.pelota.dibujar(superficie)
