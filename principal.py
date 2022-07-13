@@ -237,4 +237,8 @@ while True: #bucle de juego
         archivo.close()
         ganador=True
 
+    if puntaje%10000==0 and puntaje!=0:
+        vidas+=1
+        puntaje+=100
+
     pygame.display.update() #actualizo pantalla
