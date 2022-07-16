@@ -6,6 +6,9 @@ from texto import Texto #importo clase banner
 from jugador import Jugador #importo clase jugador
 from pelota import Pelota #importo clase pelota
 from bloque import Bloque #importo clase bloque
+from telaraña import Telaraña #importo clase telaraña
+from mariposa import Mariposa #importo clase mariposa
+from random import randint #importo función randint
 from bienvenida import Bienvenida #importo clase menu
 from bienvenida_2 import Bienvenida_2 #importo clase menu
 from bienvenida_3 import Bienvenida_3 #importo clase menu
@@ -33,6 +36,8 @@ pelotas.add(pelota) #agrego pelota al grupo de pelotas
 sonido_rebote=pygame.mixer.Sound(os.path.join(dirSonidos,'rebote.wav')) #creo sonido rebote
 
 bloques=pygame.sprite.Group() #creo grupo de bloques
+telarañas=pygame.sprite.Group() #creo grupo de telarañas
+mariposas=pygame.sprite.Group() #creo grupo de mariposas
 
 try:
     archivo=open("puntaje.txt","r")
@@ -155,6 +160,46 @@ while True: #bucle de juego
                 sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
                 sonido_araña.play()
 
+    #Detecto la colisión con las mariposas, depende donde le pego a la mariposa, la pelota se mueve en la dirección contraria, regalo la pelota extra y elimino la mariposa
+    for pelota in pelotas:
+        for mariposa in mariposas:
+            if pelota.rect.colliderect(mariposa.abajo):
+                pelota.subiendo=False
+                pelota.bajando=True
+                mariposas.remove(mariposa) #elimino el bloque
+                pelota=Pelota()
+                pelotas.add(pelota)
+                pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
+            if pelota.rect.colliderect(mariposa.arriba):
+                pelota.subiendo=True
+                pelota.bajando=False
+                mariposas.remove(mariposa) #elimino el bloque
+                pelota=Pelota()
+                pelotas.add(pelota)
+                pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
+            if pelota.rect.colliderect(mariposa.izquierda):
+                pelota.moviendo_izquierda=True
+                pelota.moviendo_derecha=False
+                mariposas.remove(mariposa) #elimino el bloque
+                pelota=Pelota()
+                pelotas.add(pelota)
+                pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
+            if pelota.rect.colliderect(mariposa.derecha):
+                pelota.moviendo_izquierda=False
+                pelota.moviendo_derecha=True
+                mariposas.remove(mariposa) #elimino el bloque
+                pelota=Pelota()
+                pelotas.add(pelota)
+                pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
+
     #Detecto colisión con piso
     for pelota in pelotas:
         if pygame.sprite.collide_rect(pelota,piso):
@@ -201,7 +246,22 @@ while True: #bucle de juego
             velocidad_jugador+=1
             velocidad_pelota=0
             jugador_1.dibujar_nuevamente(ventana)
+            pelotas.empty()
+            pelota=Pelota()
+            pelotas.add(pelota)
             pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
+
+        #Creo el array de mariposas
+        if len(mariposas)==0:
+            if nivel<=15:
+                cantidad_mariposas=nivel//3
+            else:
+                cantidad_mariposas=5
+            for i in range(cantidad_mariposas):
+                x_mariposa=ancho_bloque*randint(0,cantidad_bloques)
+                y_mariposa=alto_banner+alto_techo+alto_bloque*randint(0,máximas_filas-1)
+                mariposa=Mariposa(x_mariposa,y_mariposa,ancho_bloque,alto_bloque)
+                mariposas.add(mariposa)
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
@@ -223,7 +283,16 @@ while True: #bucle de juego
 
     for bloque in bloques:
         bloque.dibujar(ventana) #dibujo bloques
-    
+
+    for mariposa in mariposas:
+        mariposa.dibujar(ventana)
+
+    #Si la mariposa ocupa el mismo lugar que la araña, borro la araña
+    for mariposa in mariposas:
+        for bloque in bloques:
+            if mariposa.rect.colliderect(bloque.rect):
+                bloques.remove(bloque)
+
     banner.dibujar_texto(ventana,puntaje,nivel,jugando,vidas,pausa,ganador,puntaje_máximo) #dibujo texto
 
     if jugando==False and tecla[pygame.K_r] and vidas>0:
@@ -254,12 +323,6 @@ while True: #bucle de juego
 
     if puntaje%10000==0 and puntaje!=0:
         vidas+=1
-        puntaje+=100
-
-    if puntaje%500==0 and puntaje!=0:
-        pelota=Pelota()
-        pelotas.add(pelota)
-        pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
         puntaje+=100
 
     pygame.display.update() #actualizo pantalla
