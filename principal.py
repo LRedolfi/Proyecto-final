@@ -26,7 +26,9 @@ banner=Texto() #creo banner
 jugador_1=Jugador() #creo jugador
 jugador_2=Jugador() #creo jugador
 
+pelotas=pygame.sprite.Group() #creo grupo de pelotas
 pelota=Pelota() #creo pelota
+pelotas.add(pelota) #agrego pelota al grupo de pelotas
 
 sonido_rebote=pygame.mixer.Sound(os.path.join(dirSonidos,'rebote.wav')) #creo sonido rebote
 
@@ -69,42 +71,45 @@ while True: #bucle de juego
         jugador_1.cabeza.x=ancho_ventana-ancho_jugador
 
     #Chequeo que la pelota no se salga de la pantalla
-    if pelota.rect.x<0:
-        pelota.moviendo_izquierda=False
-        pelota.moviendo_derecha=True
-        sonido_rebote.play()
-    if pelota.rect.x>ancho_ventana-ancho_pelota:
-        pelota.moviendo_izquierda=True
-        pelota.moviendo_derecha=False
-        sonido_rebote.play()
+    for pelota in pelotas:
+        if pelota.rect.x<0:
+            pelota.moviendo_izquierda=False
+            pelota.moviendo_derecha=True
+            sonido_rebote.play()
+        if pelota.rect.x>ancho_ventana-ancho_pelota:
+            pelota.moviendo_izquierda=True
+            pelota.moviendo_derecha=False
+            sonido_rebote.play()
     
     #Detecto colisión con techo
-    if pygame.sprite.collide_rect(pelota,techo):
-        pelota.subiendo=False
-        pelota.bajando=True
-        sonido_rebote.play()
+    for pelota in pelotas:
+        if pygame.sprite.collide_rect(pelota,techo):
+            pelota.subiendo=False
+            pelota.bajando=True
+            sonido_rebote.play()
 
     #Detecto colisión con jugador 1 y muevo la pelota con el jugador 1
-    if pelota.abajo.colliderect(jugador_1.cabeza):
-        if tecla[pygame.K_UP] or tecla[pygame.K_w] and juego==False: #si se presiona la tecla arriba
-            pelota.subiendo=True #muevo la pelota hacia arriba
-            pelota.moviendo_derecha=True #muevo la pelota a la derecha
-            juego=True #cambio el estado del juego
-            if nivel<5:
-                velocidad_pelota=nivel+1 #cambio la velocidad de la pelota
-            else:
-                velocidad_pelota=5
-            pelota.moviendo_izquierda=False #no muevo la pelota a la izquierda
-        if jugador_1.rect.x>0:
-            if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
-                pelota.izquierda(velocidad_jugador) #muevo a la izquierda
-        if jugador_1.rect.x<ancho_ventana-ancho_jugador:
-            if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
-                pelota.derecha(velocidad_jugador) #muevo a la derecha
-        if pelota.bajando: #si la pelota baja
-            sonido_rebote.play()
-            pelota.subiendo=True
-            pelota.bajando=False
+    for pelota in pelotas:
+        if pelota.abajo.colliderect(jugador_1.cabeza):
+            if tecla[pygame.K_UP] or tecla[pygame.K_w] and juego==False: #si se presiona la tecla arriba
+                pelota.subiendo=True #muevo la pelota hacia arriba
+                pelota.moviendo_derecha=True #muevo la pelota a la derecha
+                juego=True #cambio el estado del juego
+                if nivel<5:
+                    velocidad_pelota=nivel+1 #cambio la velocidad de la pelota
+                else:
+                    velocidad_pelota=5
+                pelota.moviendo_izquierda=False #no muevo la pelota a la izquierda
+            if jugador_1.rect.x>0:
+                if tecla[pygame.K_LEFT] or tecla[pygame.K_a]: #si se presiona la tecla izquierda
+                    pelota.izquierda(velocidad_jugador) #muevo a la izquierda
+            if jugador_1.rect.x<ancho_ventana-ancho_jugador:
+                if tecla[pygame.K_RIGHT] or tecla[pygame.K_d]: #si se presiona la tecla derecha
+                    pelota.derecha(velocidad_jugador) #muevo a la derecha
+            if pelota.bajando: #si la pelota baja
+                sonido_rebote.play()
+                pelota.subiendo=True
+                pelota.bajando=False
 
     #Pausa del juego
     if tecla[pygame.K_r] and pausa == True:
@@ -119,58 +124,63 @@ while True: #bucle de juego
         velocidad_pelota=0
 
     #Detecto la colisión con los bloques, depende donde le pego al bloque, la pelota se mueve en la dirección contraria, y elimino el bloque
-    for bloque in bloques:
-        if pelota.rect.colliderect(bloque.abajo):
-            pelota.subiendo=False
-            pelota.bajando=True
-            bloques.remove(bloque) #elimino el bloque
-            puntaje+=100 #aumento el puntaje
-            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
-            sonido_araña.play()
-        if pelota.rect.colliderect(bloque.arriba):
-            pelota.subiendo=True
-            pelota.bajando=False
-            bloques.remove(bloque) #elimino el bloque
-            puntaje+=100 #aumento el puntaje
-            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
-            sonido_araña.play()
-        if pelota.rect.colliderect(bloque.izquierda):
-            pelota.moviendo_izquierda=True
-            pelota.moviendo_derecha=False
-            bloques.remove(bloque) #elimino el bloque
-            puntaje+=100 #aumento el puntaje
-            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
-            sonido_araña.play()
-        if pelota.rect.colliderect(bloque.derecha):
-            pelota.moviendo_izquierda=False
-            pelota.moviendo_derecha=True
-            bloques.remove(bloque) #elimino el bloque
-            puntaje+=100 #aumento el puntaje
-            sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
-            sonido_araña.play()
+    for pelota in pelotas:
+        for bloque in bloques:
+            if pelota.rect.colliderect(bloque.abajo):
+                pelota.subiendo=False
+                pelota.bajando=True
+                bloques.remove(bloque) #elimino el bloque
+                puntaje+=100 #aumento el puntaje
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
+            if pelota.rect.colliderect(bloque.arriba):
+                pelota.subiendo=True
+                pelota.bajando=False
+                bloques.remove(bloque) #elimino el bloque
+                puntaje+=100 #aumento el puntaje
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
+            if pelota.rect.colliderect(bloque.izquierda):
+                pelota.moviendo_izquierda=True
+                pelota.moviendo_derecha=False
+                bloques.remove(bloque) #elimino el bloque
+                puntaje+=100 #aumento el puntaje
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
+            if pelota.rect.colliderect(bloque.derecha):
+                pelota.moviendo_izquierda=False
+                pelota.moviendo_derecha=True
+                bloques.remove(bloque) #elimino el bloque
+                puntaje+=100 #aumento el puntaje
+                sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
+                sonido_araña.play()
 
     #Detecto colisión con piso
-    if pygame.sprite.collide_rect(pelota,piso):
-        if juego==True:
-            vidas-=1 #resto una vida
-            juego=False
-            jugando=False
-            sonido_perder=pygame.mixer.Sound(os.path.join(dirSonidos,'perder.wav'))
-            sonido_perder.play()
-        velocidad_pelota=0
+    for pelota in pelotas:
+        if pygame.sprite.collide_rect(pelota,piso):
+            pelotas.remove(pelota)
+            if len(pelotas)==0:
+                if juego==True:
+                    vidas-=1 #resto una vida
+                    juego=False
+                    jugando=False
+                    sonido_perder=pygame.mixer.Sound(os.path.join(dirSonidos,'perder.wav'))
+                    sonido_perder.play()
+                velocidad_pelota=0
 
     #Llamo a los movimientos de la pelota
-    if pelota.subiendo:
-        pelota.subir(velocidad_pelota)
-    
-    if pelota.bajando:
-        pelota.bajar(velocidad_pelota)
+    for pelota in pelotas:
+        if pelota.subiendo:
+            pelota.subir(velocidad_pelota)
+        
+        if pelota.bajando:
+            pelota.bajar(velocidad_pelota)
 
-    if pelota.moviendo_izquierda:
-        pelota.izquierda(velocidad_pelota)
-    
-    if pelota.moviendo_derecha:
-        pelota.derecha(velocidad_pelota)
+        if pelota.moviendo_izquierda:
+            pelota.izquierda(velocidad_pelota)
+        
+        if pelota.moviendo_derecha:
+            pelota.derecha(velocidad_pelota)
 
     #Creo el array de bloques
     if len(bloques)==0:
@@ -191,7 +201,7 @@ while True: #bucle de juego
             velocidad_jugador+=1
             velocidad_pelota=0
             jugador_1.dibujar_nuevamente(ventana)
-            pelota.dibujar_nuevamente(ventana)
+            pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
 
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
@@ -208,7 +218,8 @@ while True: #bucle de juego
 
     jugador_1.dibujar(ventana,jugando) #dibujo jugador
 
-    pelota.dibujar(ventana) #dibujo pelota
+    for pelota in pelotas:
+        pelota.dibujar(ventana) #dibujo pelota
 
     for bloque in bloques:
         bloque.dibujar(ventana) #dibujo bloques
@@ -217,12 +228,16 @@ while True: #bucle de juego
 
     if jugando==False and tecla[pygame.K_r] and vidas>0:
         jugador_1.dibujar_nuevamente(ventana)
-        pelota.dibujar_nuevamente(ventana)
+        pelota=Pelota()
+        pelotas.add(pelota)
+        pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
         jugando=True
 
     if jugando==False and tecla[pygame.K_r] and vidas==0:
         jugador_1.dibujar_nuevamente(ventana)
-        pelota.dibujar_nuevamente(ventana)
+        pelota=Pelota()
+        pelotas.add(pelota)
+        pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
         jugando=True
         nivel=1
         puntaje=0
@@ -239,6 +254,12 @@ while True: #bucle de juego
 
     if puntaje%10000==0 and puntaje!=0:
         vidas+=1
+        puntaje+=100
+
+    if puntaje%500==0 and puntaje!=0:
+        pelota=Pelota()
+        pelotas.add(pelota)
+        pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
         puntaje+=100
 
     pygame.display.update() #actualizo pantalla

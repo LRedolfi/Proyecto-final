@@ -1,5 +1,6 @@
 import pygame #importo librería
 from constantes import * #importo constantes
+from jugador import *
 
 class Pelota(pygame.sprite.Sprite): #defino la clase pelota
     def __init__(self): #constructor de la clase
@@ -16,14 +17,14 @@ class Pelota(pygame.sprite.Sprite): #defino la clase pelota
         self.bajando=False #pelota bajando
         self.moviendo_izquierda=False #pelota izquierda
         self.moviendo_derecha=False #pelota derecha
-        self.abajo=pygame.Rect(self.rect.x,self.rect.y+alto_pelota-1,self.rect.width,1)
+        self.abajo=pygame.Rect(self.rect.x,self.rect.y+alto_pelota-1,self.rect.width,1) #rectángulo abajo de la pelota
     
     def dibujar(self,superficie): #dibujo la pelota
         superficie.blit(self.image,self.rect) #dibujo la superficie
 
-    def dibujar_nuevamente(self,superficie): #dibujo la pelota
+    def dibujar_nuevamente(self,superficie,x): #dibujo la pelota
         self.rect.y=alto_ventana-alto_piso-alto_pelota-alto_jugador+1 #posición en y
-        self.rect.x=ancho_ventana//2-ancho_pelota//2 #posición en x
+        self.rect.x=x-ancho_pelota//2+ancho_jugador//2 #posición en x
         self.abajo=pygame.Rect(self.rect.x,self.rect.y+alto_pelota-1,self.rect.width,1)
         superficie.blit(self.image,self.rect) #dibujo la superficie
 

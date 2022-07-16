@@ -35,12 +35,12 @@ class Bienvenida(pygame.sprite.Sprite):
     def dibujar(self,superficie):
         superficie.blit(self.image,self.rect)
         superficie.blit(self.imagen_piso,self.rect_piso)
-        self.texto.mostrar_texto('Oh, no! Las arañas están invadiendo la casa de Cody!',33,color_banner,ancho_ventana//2+2,10+2,superficie,None)
-        self.texto.mostrar_texto('Oh, no! Las arañas están invadiendo la casa de Cody!',33,color_techo,ancho_ventana//2,10,superficie,None)
-        self.texto.mostrar_texto('Quieres ayudar a Cody a limpiar su casa de las arañas?',33,color_banner,ancho_ventana//2+2,50+2,superficie,None)
-        self.texto.mostrar_texto('Quieres ayudar a Cody a limpiar su casa de las arañas?',33,color_techo,ancho_ventana//2,50,superficie,None)
-        self.texto.mostrar_texto('Presiona cualquier tecla para continuar',33,color_banner,ancho_ventana//2+2,100+2,superficie,None)
-        self.texto.mostrar_texto('Presiona cualquier tecla para continuar',33,color_techo,ancho_ventana//2,100,superficie,None)
+        self.texto.mostrar_texto('Oh, no! Las arañas están invadiendo la casa de Cody!',33,color_banner,ancho_ventana//2+2,10+2,superficie)
+        self.texto.mostrar_texto('Oh, no! Las arañas están invadiendo la casa de Cody!',33,color_techo,ancho_ventana//2,10,superficie)
+        self.texto.mostrar_texto('Quieres ayudar a Cody a limpiar su casa de las arañas?',33,color_banner,ancho_ventana//2+2,50+2,superficie)
+        self.texto.mostrar_texto('Quieres ayudar a Cody a limpiar su casa de las arañas?',33,color_techo,ancho_ventana//2,50,superficie)
+        self.texto.mostrar_texto('Presiona cualquier tecla para continuar',33,color_banner,ancho_ventana//2+2,100+2,superficie)
+        self.texto.mostrar_texto('Presiona cualquier tecla para continuar',33,color_techo,ancho_ventana//2,100,superficie)
         pygame.display.flip()
         self.animación(self.imágenes_jugador,self.imágenes_araña,self.rect_jugador,self.rect_araña,superficie)
 
