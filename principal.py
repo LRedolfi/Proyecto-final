@@ -200,6 +200,26 @@ while True: #bucle de juego
                 sonido_araña=pygame.mixer.Sound(os.path.join(dirSonidos,'araña.wav'))
                 sonido_araña.play()
 
+    #Detecto la colisión con las telarañas, depende donde le pego a la telaraña, la pelota se mueve en la dirección contraria
+    for pelota in pelotas:
+        for telaraña in telarañas:
+            if pelota.rect.colliderect(telaraña.abajo):
+                pelota.subiendo=False
+                pelota.bajando=True
+                sonido_rebote.play()
+            if pelota.rect.colliderect(telaraña.arriba):
+                pelota.subiendo=True
+                pelota.bajando=False
+                sonido_rebote.play()
+            if pelota.rect.colliderect(telaraña.izquierda):
+                pelota.moviendo_izquierda=True
+                pelota.moviendo_derecha=False
+                sonido_rebote.play()
+            if pelota.rect.colliderect(telaraña.derecha):
+                pelota.moviendo_izquierda=False
+                pelota.moviendo_derecha=True
+                sonido_rebote.play()
+
     #Detecto colisión con piso
     for pelota in pelotas:
         if pygame.sprite.collide_rect(pelota,piso):
@@ -263,6 +283,18 @@ while True: #bucle de juego
                 mariposa=Mariposa(x_mariposa,y_mariposa,ancho_bloque,alto_bloque)
                 mariposas.add(mariposa)
 
+    #Creo el array de telarañas
+    if len(telarañas)==0:
+        if nivel<=20:
+            cantidad_telarañas=nivel//5
+        else:
+            cantidad_telarañas=5
+        for i in range(cantidad_telarañas):
+            x_telaraña=randint(0,ancho_ventana)
+            y_telaraña=alto_banner+alto_techo+50+randint(0,alto_ventana//2)
+            telaraña=Telaraña(x_telaraña,y_telaraña,50,50)
+            telarañas.add(telaraña)
+
     for evento in pygame.event.get(): #recorro eventos
         if evento.type==pygame.QUIT: #si se presiona x se cierra
             pygame.quit() #se cierra pygame
@@ -287,11 +319,26 @@ while True: #bucle de juego
     for mariposa in mariposas:
         mariposa.dibujar(ventana)
 
+    for telaraña in telarañas:
+        telaraña.dibujar(ventana)
+
     #Si la mariposa ocupa el mismo lugar que la araña, borro la araña
     for mariposa in mariposas:
         for bloque in bloques:
             if mariposa.rect.colliderect(bloque.rect):
                 bloques.remove(bloque)
+
+    #Si la telaraña ocupa el mismo lugar que la araña, borro la araña
+    for telaraña in telarañas:
+        for bloque in bloques:
+            if telaraña.rect.colliderect(bloque.rect):
+                bloques.remove(bloque)
+
+    #Si la telaraña ocupa el mismo lugar que la mariposa, borro la mariposa
+    for telaraña in telarañas:
+        for mariposa in mariposas:
+            if telaraña.rect.colliderect(mariposa.rect):
+                mariposas.remove(mariposa)
 
     banner.dibujar_texto(ventana,puntaje,nivel,jugando,vidas,pausa,ganador,puntaje_máximo) #dibujo texto
 
@@ -312,6 +359,8 @@ while True: #bucle de juego
         puntaje=0
         vidas=3
         bloques.empty()
+        mariposas.empty()
+        telarañas.empty()
         ganador=False
 
     if puntaje>puntaje_máximo:
