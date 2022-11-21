@@ -12,6 +12,7 @@ from random import randint #importo función randint
 from bienvenida import Bienvenida #importo clase menu
 from bienvenida_2 import Bienvenida_2 #importo clase menu
 from bienvenida_3 import Bienvenida_3 #importo clase menu
+from bienvenida_4 import Bienvenida_4 #importo clase menu
 
 pygame.init() #inicializo pygame
 
@@ -55,6 +56,10 @@ bienvenida=Bienvenida_2() #creo menu
 bienvenida.dibujar(ventana) #dibujo menu
 
 bienvenida=Bienvenida_3() #creo menu
+
+bienvenida.dibujar(ventana) #dibujo menu
+
+bienvenida=Bienvenida_4() #creo menu
 
 bienvenida.dibujar(ventana) #dibujo menu
 
@@ -270,6 +275,7 @@ while True: #bucle de juego
             pelota=Pelota()
             pelotas.add(pelota)
             pelota.dibujar_nuevamente(ventana,jugador_1.rect.x)
+            telarañas.empty()
 
         #Creo el array de mariposas
         if len(mariposas)==0:
